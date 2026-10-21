@@ -1,0 +1,72 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Premier League 2026-27 Data Proxy",
+    "description": "Returns CSV files from the Kaggle dataset dataenthusiast007/2026-27-premier-league-season via an Azure Function proxy.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://YOUR-FUNCTION-APP.azurewebsites.net/api"
+    }
+  ],
+  "paths": {
+    "/files/{fileName}": {
+      "get": {
+        "operationId": "downloadPremierLeagueFile",
+        "summary": "Download one CSV file from the 2026-27 Premier League dataset",
+        "description": "Returns the raw CSV contents of one file. Use fixtures.csv for upcoming matches, results.csv for completed match scores, league_table.csv for current standings, managers_and_club_info.csv for managers and club details, and teams_and_stadiums.csv for teams and their stadiums.",
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "required": true,
+            "description": "The CSV file to download.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fixtures.csv",
+                "league_table.csv",
+                "managers_and_club_info.csv",
+                "results.csv",
+                "teams_and_stadiums.csv"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The CSV file contents.",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown file name."
+          },
+          "502": {
+            "description": "Kaggle returned an error."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "functionKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-functions-key"
+      }
+    }
+  },
+  "security": [
+    {
+      "functionKey": []
+    }
+  ]
+}
