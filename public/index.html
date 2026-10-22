@@ -41,6 +41,10 @@ window.addEventListener('DOMContentLoaded', function () {
   document.body.setAttribute('data-rendered', '1');
 });
 </script>
+<script src="data/clubs.js"></script>
+<script src="data/results.js"></script>
+<script src="data/fixtures.js"></script>
+<script src="data/puzzles.js"></script>
 </head>
 <body>
 <x-dc>
@@ -110,518 +114,84 @@ a{color:#161616}a:hover{color:#555}
   .sheet [style*="repeat(16, 13.5px)"]{width:100% !important;max-width:420px;aspect-ratio:1;grid-template-columns:repeat(16,minmax(0,1fr)) !important;grid-auto-rows:minmax(0,1fr) !important;align-self:center !important}
   .sheet [style*="repeat(16, 13.5px)"] span{font-size:12px !important;min-height:0 !important}
 }
+
+.puzzle-row>div+div{min-width:0}
+@media screen and (max-width:720px){
+  .puzzle-row{grid-template-columns:1fr !important;gap:18px 0 !important}
+  .puzzle-row>.puzzle-col{border-left:none !important;padding-left:0 !important;margin-left:0 !important}
+  .word-grid{width:100% !important;max-width:420px;aspect-ratio:1;grid-auto-rows:minmax(0,1fr) !important}
+}
 </style>
 </helmet>
 <div class="sheet" style="width: 11in; height: 210mm; box-sizing: border-box; padding: 12px 22px 10px; background: #ffffff; color: #161616; font-family: 'Archivo Narrow', sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; gap: 5px; overflow: hidden">
 <header style="display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 3px double #161616; padding-bottom: 3px">
 <div style="display: flex; align-items: baseline; gap: 10px"><span style="font-family: 'Literata', serif; font-weight: 700; font-size: 22px; line-height: 1">CrossbarPuzzles.com</span><span style="font-size: 12px; font-style: italic; color: {{c.a1}}">Your weekly guide to England's beautiful game.</span></div>
 <div style="display: flex; flex-direction: column; align-items: flex-end; font-size: 10.5px"><span>Premier League 2026/27 · Matchweek {{lastMW}} recap ({{lastDates}}) · Matchweek {{nextMW}} preview ({{nextDates}})</span><span style="color: #555555">Data: 2026-27 Premier League Season (Kaggle)</span></div>
-</header><div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px"><sc-for list="{{sf0_6}}" as="s"><div style="border: 1.2px solid #161616; border-top: 4px solid {{c.a1}}; padding: 1px 6px; display: flex; flex-direction: column; min-width: 0"><span style="font-size: 9px; color: #555555; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden">{{s.k}}</span><b style="font-family: 'Literata', serif; font-size: 12px; line-height: 1.2; white-space: nowrap; overflow: hidden">{{s.v}}</b><span style="font-size: 9.5px; color: #555555; white-space: nowrap; overflow: hidden">{{s.s}}</span></div></sc-for></div><div style="display: grid; grid-template-columns: 268px minmax(0, 1fr); gap: 0 14px; flex-grow: 1; min-height: 0"><aside style="display: flex; flex-direction: column; gap: 0; min-width: 0; border-right: 1.5px solid #161616; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; "><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Power ratings · all 20</span></h2><div style="display: grid; grid-template-columns: 14px minmax(0, 1fr) 28px 28px 32px 64px; gap: 0 4px; font-size: 10px; font-weight: 600; color: #444444; text-align: right"><span></span><span style="text-align: left">Club</span><span>Att</span><span>Def</span><span>Rating</span><span></span></div><sc-for list="{{powerRows}}" as="p"><div style="display: grid; grid-template-columns: 14px minmax(0, 1fr) 28px 28px 32px 64px; gap: 0 4px; align-items: center; font-size: 10.5px; height: 11px; text-align: right"><span style="color: #555555">{{p.rk}}</span><span style="text-align: left; white-space: nowrap; overflow: hidden">{{p.name}}</span><span>{{p.att}}</span><span>{{p.def}}</span><b>{{p.r}}</b><span style="display: block; height: 6px; background: #eeeeee"><span style="display: block; height: 6px; width: {{p.w}}; background: {{c.home}}"></span></span></div></sc-for><span style="font-size: 10px; color: #444444; line-height: 1.25">Att / Def = goals scored / let in vs. an average side against the same opponents (1.00 = average; lower Def is better). Rating = Att ÷ Def.</span><div style="height: 5px; flex-shrink: 0"></div><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Next 3 games</span></h2><span style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #444444">Hardest run</span><sc-for list="{{toughest}}" as="r"><div style="display: grid; grid-template-columns: minmax(0, 1fr) 116px 26px; gap: 0 4px; font-size: 10.5px; height: 12.5px; align-items: center"><b style="white-space: nowrap; overflow: hidden">{{r.name}}</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px">{{r.opp}}</span><span style="text-align: right">{{r.d}}</span></div></sc-for><span style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #444444; margin-top: 2px">Kindest run</span><sc-for list="{{easiest}}" as="r"><div style="display: grid; grid-template-columns: minmax(0, 1fr) 116px 26px; gap: 0 4px; font-size: 10.5px; height: 12.5px; align-items: center"><b style="white-space: nowrap; overflow: hidden">{{r.name}}</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px">{{r.opp}}</span><span style="text-align: right">{{r.d}}</span></div></sc-for><span style="font-size: 10px; color: #444444; line-height: 1.25">Number = average power rating of the three opponents.</span><div style="height: 5px; flex-shrink: 0"></div><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Puzzle 3 · Stadium Match</span></h2><span style="font-size: 11px; line-height: 1.3">Write the club's letter next to its home ground. Seats = 2026/27 capacity.</span>
+</header><div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px"><sc-for list="{{sf0_6}}" as="s"><div style="border: 1.2px solid #161616; border-top: 4px solid {{c.a1}}; padding: 1px 6px; display: flex; flex-direction: column; min-width: 0"><span style="font-size: 9px; color: #555555; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden">{{s.k}}</span><b style="font-family: 'Literata', serif; font-size: 12px; line-height: 1.2; white-space: nowrap; overflow: hidden">{{s.v}}</b><span style="font-size: 9.5px; color: #555555; white-space: nowrap; overflow: hidden">{{s.s}}</span></div></sc-for></div><div style="display: grid; grid-template-columns: 268px minmax(0, 1fr); gap: 0 14px; flex-grow: 1; min-height: 0"><aside style="display: flex; flex-direction: column; gap: 0; min-width: 0; border-right: 1.5px solid #161616; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; "><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Power ratings · all 20</span></h2><div style="display: grid; grid-template-columns: 14px minmax(0, 1fr) 28px 28px 32px 64px; gap: 0 4px; font-size: 10px; font-weight: 600; color: #444444; text-align: right"><span></span><span style="text-align: left">Club</span><span>Att</span><span>Def</span><span>Rating</span><span></span></div><sc-for list="{{powerRows}}" as="p"><div style="display: grid; grid-template-columns: 14px minmax(0, 1fr) 28px 28px 32px 64px; gap: 0 4px; align-items: center; font-size: 10.5px; height: 11px; text-align: right"><span style="color: #555555">{{p.rk}}</span><span style="text-align: left; white-space: nowrap; overflow: hidden">{{p.name}}</span><span>{{p.att}}</span><span>{{p.def}}</span><b>{{p.r}}</b><span style="display: block; height: 6px; background: #eeeeee"><span style="display: block; height: 6px; width: {{p.w}}; background: {{c.home}}"></span></span></div></sc-for><span style="font-size: 10px; color: #444444; line-height: 1.25">Att / Def = goals scored / let in vs. an average side against the same opponents (1.00 = average; lower Def is better). Rating = Att ÷ Def.</span><div style="height: 5px; flex-shrink: 0"></div><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Next 3 games</span></h2><span style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #444444">Hardest run</span><sc-for list="{{toughest}}" as="r"><div style="display: grid; grid-template-columns: minmax(0, 1fr) 116px 26px; gap: 0 4px; font-size: 10.5px; height: 12.5px; align-items: center"><b style="white-space: nowrap; overflow: hidden">{{r.name}}</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px">{{r.opp}}</span><span style="text-align: right">{{r.d}}</span></div></sc-for><span style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #444444; margin-top: 2px">Kindest run</span><sc-for list="{{easiest}}" as="r"><div style="display: grid; grid-template-columns: minmax(0, 1fr) 116px 26px; gap: 0 4px; font-size: 10.5px; height: 12.5px; align-items: center"><b style="white-space: nowrap; overflow: hidden">{{r.name}}</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px">{{r.opp}}</span><span style="text-align: right">{{r.d}}</span></div></sc-for><span style="font-size: 10px; color: #444444; line-height: 1.25">Number = average power rating of the three opponents.</span><div style="height: 5px; flex-shrink: 0"></div><div class="puzzle-col" style="display: flex; flex-direction: column; gap: 0; min-width: 0"><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Puzzle 1 · Stadium Match</span></h2><span style="font-size: 11px; line-height: 1.3">Write the club's letter next to its home ground. Seats = 2026/27 capacity.</span>
 <div style="display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 0 6px">
 <div style="display: flex; flex-direction: column"><sc-for list="{{mStad}}" as="s"><span style="display: grid; grid-template-columns: 14px 14px minmax(0, 1fr) 30px; gap: 0 3px; align-items: center; font-size: 10.5px; height: 14px"><span style="color: #555555">{{s.n}}</span><span style="width: 13px; height: 12px; border: 1.3px solid #161616; box-sizing: border-box; display: block"></span><b style="white-space: nowrap; overflow: hidden">{{s.s}}</b><span style="font-size: 9px; color: #555555; text-align: right">{{s.cap}}</span></span></sc-for></div>
 <div style="display: flex; flex-direction: column"><sc-for list="{{mClubs}}" as="k"><span style="font-size: 10.5px; height: 14px; display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden"><b style="width: 12px; height: 12px; border-radius: 50%; background: {{c.tile}}; border: 1px solid #161616; font-size: 8.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0">{{k.l}}</b>{{k.name}}</span></sc-for></div>
 </div>
-<span style="font-size: 9px; color: #777777; transform: rotate(180deg); text-align: center; margin-top: 1px">Answers: {{mKey}}</span></aside><div style="display: flex; flex-direction: column; gap: 0; min-width: 0"><div style="display: flex; flex-direction: column; gap: 0; min-width: 0"><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Matchweek {{lastMW}} results · {{lastDates}}</span><span style="font-size: 10.5px; font-weight: 400; letter-spacing: 0; text-transform: none">% = model's pre-match chance of that result</span></h2><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px"><sc-for list="{{matches}}" as="m"><div style="display: grid; grid-template-columns: 24px minmax(0, 1fr) 28px minmax(0, 1fr) 50px; gap: 0 5px; align-items: center; font-size: 11px; height: 13.5px; border-bottom: 1px solid #e6e6e6"><span style="color: #555555; font-size: 10px">{{m.day}}</span><span style="text-align: right; white-space: nowrap; overflow: hidden; font-weight: {{m.hw}}">{{m.h}}</span><b style="text-align: center">{{m.hs}}–{{m.as}}</b><span style="white-space: nowrap; overflow: hidden; font-weight: {{m.aw}}">{{m.a}}</span><span style="font-size: 10px; text-align: right; white-space: nowrap">{{m.chance}} <b style="font-size: 8.5px; color: {{c.a1}}">{{m.shock}}</b></span></div></sc-for></div><div style="display: flex; flex-wrap: wrap; gap: 0 12px; font-size: 10px; margin-top: 2px"><sc-for list="{{wkStats}}" as="s"><span><span style="color: #555555">{{s.k}}:</span> <b>{{s.v}}</b></span></sc-for></div></div><div style="height: 5px; flex-shrink: 0"></div><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Predict Matchweek {{nextMW}} · {{nextDates}}</span><span style="font-size: 10.5px; font-weight: 400; letter-spacing: 0; text-transform: none"><b>3 pts</b> exact score · <b>1 pt</b> right result</span></h2><div style="display: grid; grid-template-columns: 58px minmax(0, 1fr) 16px 6px 16px minmax(0, 1fr) 118px 44px 30px; gap: 0 5px; font-size: 10px; font-weight: 600; color: #444444"><span>UK time</span><span style="text-align: right">Home</span><span></span><span></span><span></span><span>Away</span><span>Home · draw · away</span><span>xG</span><span>Likely</span></div><sc-for list="{{fixtures}}" as="f"><div style="display: grid; grid-template-columns: 58px minmax(0, 1fr) 16px 6px 16px minmax(0, 1fr) 118px 44px 30px; gap: 0 5px; align-items: center; font-size: 11.5px; height: 13.5px; border-bottom: 1px solid #e6e6e6"><span style="font-size: 10.5px; color: #444444">{{f.dow}} {{f.time}}</span><span style="text-align: right; white-space: nowrap; overflow: hidden"><b>{{f.hn}}</b> <span style="color: #777777; font-size: 10px">{{f.hp}}</span></span><span style="width: 16px; height: 14px; border: 1.5px solid #161616; box-sizing: border-box; display: block"></span><span style="text-align: center">–</span><span style="width: 16px; height: 14px; border: 1.5px solid #161616; box-sizing: border-box; display: block"></span><span style="white-space: nowrap; overflow: hidden"><b>{{f.an}}</b> <span style="color: #777777; font-size: 10px">{{f.ap}}</span></span><span style="display: flex; align-items: center; gap: 3px; font-size: 10px"><span style="width: 18px; text-align: right">{{f.ph}}</span><span style="display: flex; height: 7px; flex-grow: 1"><span style="width: {{f.pw}}; background: {{c.home}}"></span><span style="width: {{f.pdw}}; background: {{c.draw}}"></span><span style="flex-grow: 1; background: {{c.away}}"></span></span><span style="width: 18px">{{f.pa}}</span></span><span style="font-size: 10.5px; text-align: center">{{f.xh}}–{{f.xa}}</span><span style="font-size: 10.5px; text-align: center">{{f.score}}</span></div></sc-for><div style="height: 5px; flex-shrink: 0"></div><div style="display: grid; grid-template-columns: 410px minmax(0, 1fr); gap: 0 12px; flex-grow: 1; min-height: 0; border-top: 2px solid #161616; padding-top: 4px; padding: 0"><div style="display: flex; flex-direction: column; gap: 0; min-width: 0"><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Puzzle 1 · Top of the Table</span></h2><span style="font-size: 11px; line-height: 1.3">Fill in the leader's blank row using the column totals at the bottom.</span><div style="display: grid; grid-template-columns: 16px minmax(0, 1fr) repeat(8, 25px) 58px; gap: 0 2px; font-size: 10.5px; font-weight: 600; color: #444444; text-align: right; border-bottom: 1px solid #161616; margin-top: 1px"><span style="text-align: left">#</span><span style="text-align: left">Club</span><span>P</span><span>W</span><span>D</span><span>L</span><span>GF</span><span>GA</span><span>GD</span><span>Pts</span><span style="text-align: center">Last 5</span></div><sc-for list="{{prow}}" as="r"><div style="display: grid; grid-template-columns: 16px minmax(0, 1fr) repeat(8, 25px) 58px; gap: 0 2px; align-items: center; height: {{r.hc}}; font-size: 11px; text-align: right; background: {{r.bg}}; border-bottom: {{r.rule}}"><b style="text-align: left">{{r.pos}}</b><span style="text-align: left; white-space: nowrap; overflow: hidden; font-weight: {{r.nw}}">{{r.name}}</span><sc-for list="{{r.cells}}" as="x"><span style="display: block; height: {{x.h}}; line-height: {{x.lh}}; box-sizing: border-box; padding-right: 2px; border: {{x.b}}; background: {{x.bg}}; font-weight: {{x.fw}}">{{x.t}}</span></sc-for><span style="display: flex; gap: 1.5px; justify-content: center"><sc-for list="{{r.dots}}" as="d"><span style="width: 10px; height: 10px; background: {{d.bg}}; color: {{d.fg}}; font-size: 7.5px; font-weight: 700; line-height: 10px; text-align: center; border-radius: 1px">{{d.r}}</span></sc-for></span></div></sc-for><div style="display: grid; grid-template-columns: 16px minmax(0, 1fr) repeat(8, 25px) 58px; gap: 0 2px; align-items: center; height: 17px; font-size: 11.5px; font-weight: 700; text-align: right; border-top: 2px solid #161616; border-bottom: 2px solid #161616; background: {{c.tot}}"><span></span><span style="text-align: left; text-transform: uppercase; letter-spacing: 0.06em; font-size: 10.5px">Totals</span><sc-for list="{{totals}}" as="t"><span style="padding-right: 2px">{{t.v}}</span></sc-for><span></span></div><span style="font-size: 10px; color: #444444; line-height: 1.25; margin-top: 1px">Leader = column total minus the other 19 clubs · Last 5: oldest → newest</span></div><div style="display: flex; flex-direction: column; gap: 0; min-width: 0; border-left: 1px solid #161616; padding-left: 12px; margin-left: -6px"><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Puzzle 2 · Club Word Search</span></h2><span style="font-size: 11px; line-height: 1.3">Find the word in bold for all 20 clubs. Words run → ↓ and ↘. Tick each one off.</span><div style="display: grid; grid-template-columns: {{wsCols}}; grid-auto-rows: 11px; align-self: center; border: 1.5px solid #161616; padding: 1px; flex-shrink: 0"><sc-for list="{{ws}}" as="L"><span style="display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: {{L.fs}}; font-weight: {{L.fw}}; color: {{L.col}}">{{L.ch}}</span></sc-for></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 8px"><sc-for list="{{words}}" as="w"><span style="display: flex; align-items: center; gap: 3px; font-size: 10.5px; height: 12px; white-space: nowrap; overflow: hidden"><span style="width: 7px; height: 7px; border: 1.2px solid #161616; flex-shrink: 0"></span><span><span style="color: #666666">{{w.pre}}</span><b>{{w.w}}</b><span style="color: #666666">{{w.post}}</span></span></span></sc-for></div></div></div></div></div>
+<span style="font-size: 9px; color: #777777; transform: rotate(180deg); text-align: center; margin-top: 1px">Answers: {{mKey}}</span></div></aside><div style="display: flex; flex-direction: column; gap: 0; min-width: 0"><div style="display: flex; flex-direction: column; gap: 0; min-width: 0"><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Matchweek {{lastMW}} results · {{lastDates}}</span><span style="font-size: 10.5px; font-weight: 400; letter-spacing: 0; text-transform: none">% = model's pre-match chance of that result</span></h2><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px"><sc-for list="{{matches}}" as="m"><div style="display: grid; grid-template-columns: 24px minmax(0, 1fr) 28px minmax(0, 1fr) 50px; gap: 0 5px; align-items: center; font-size: 11px; height: 13.5px; border-bottom: 1px solid #e6e6e6"><span style="color: #555555; font-size: 10px">{{m.day}}</span><span style="text-align: right; white-space: nowrap; overflow: hidden; font-weight: {{m.hw}}">{{m.h}}</span><b style="text-align: center">{{m.hs}}–{{m.as}}</b><span style="white-space: nowrap; overflow: hidden; font-weight: {{m.aw}}">{{m.a}}</span><span style="font-size: 10px; text-align: right; white-space: nowrap">{{m.chance}} <b style="font-size: 8.5px; color: {{c.a1}}">{{m.shock}}</b></span></div></sc-for></div><div style="display: flex; flex-wrap: wrap; gap: 0 12px; font-size: 10px; margin-top: 2px"><sc-for list="{{wkStats}}" as="s"><span><span style="color: #555555">{{s.k}}:</span> <b>{{s.v}}</b></span></sc-for></div></div><div style="height: 5px; flex-shrink: 0"></div><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Predict Matchweek {{nextMW}} · {{nextDates}}</span><span style="font-size: 10.5px; font-weight: 400; letter-spacing: 0; text-transform: none"><b>3 pts</b> exact score · <b>1 pt</b> right result</span></h2><div style="display: grid; grid-template-columns: 58px minmax(0, 1fr) 16px 6px 16px minmax(0, 1fr) 118px 44px 30px; gap: 0 5px; font-size: 10px; font-weight: 600; color: #444444"><span>UK time</span><span style="text-align: right">Home</span><span></span><span></span><span></span><span>Away</span><span>Home · draw · away</span><span>xG</span><span>Likely</span></div><sc-for list="{{fixtures}}" as="f"><div style="display: grid; grid-template-columns: 58px minmax(0, 1fr) 16px 6px 16px minmax(0, 1fr) 118px 44px 30px; gap: 0 5px; align-items: center; font-size: 11.5px; height: 13.5px; border-bottom: 1px solid #e6e6e6"><span style="font-size: 10.5px; color: #444444">{{f.dow}} {{f.time}}</span><span style="text-align: right; white-space: nowrap; overflow: hidden"><b>{{f.hn}}</b> <span style="color: #777777; font-size: 10px">{{f.hp}}</span></span><span style="width: 16px; height: 14px; border: 1.5px solid #161616; box-sizing: border-box; display: block"></span><span style="text-align: center">–</span><span style="width: 16px; height: 14px; border: 1.5px solid #161616; box-sizing: border-box; display: block"></span><span style="white-space: nowrap; overflow: hidden"><b>{{f.an}}</b> <span style="color: #777777; font-size: 10px">{{f.ap}}</span></span><span style="display: flex; align-items: center; gap: 3px; font-size: 10px"><span style="width: 18px; text-align: right">{{f.ph}}</span><span style="display: flex; height: 7px; flex-grow: 1"><span style="width: {{f.pw}}; background: {{c.home}}"></span><span style="width: {{f.pdw}}; background: {{c.draw}}"></span><span style="flex-grow: 1; background: {{c.away}}"></span></span><span style="width: 18px">{{f.pa}}</span></span><span style="font-size: 10.5px; text-align: center">{{f.xh}}–{{f.xa}}</span><span style="font-size: 10.5px; text-align: center">{{f.score}}</span></div></sc-for><div style="height: 5px; flex-shrink: 0"></div><div class="puzzle-row" style="display: grid; grid-template-columns: 410px minmax(0, 1fr); gap: 0 12px; flex-grow: 1; min-height: 0; border-top: 2px solid #161616; padding-top: 4px;"><div class="puzzle-col" style="display: flex; flex-direction: column; gap: 0; min-width: 0"><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Puzzle 2 · Top of the Table</span></h2><span style="font-size: 11px; line-height: 1.3">Fill in the leader's blank row using the column totals at the bottom.</span><div style="display: grid; grid-template-columns: 16px minmax(0, 1fr) repeat(8, 25px) 58px; gap: 0 2px; font-size: 10.5px; font-weight: 600; color: #444444; text-align: right; border-bottom: 1px solid #161616; margin-top: 1px"><span style="text-align: left">#</span><span style="text-align: left">Club</span><span>P</span><span>W</span><span>D</span><span>L</span><span>GF</span><span>GA</span><span>GD</span><span>Pts</span><span style="text-align: center">Last 5</span></div><sc-for list="{{prow}}" as="r"><div style="display: grid; grid-template-columns: 16px minmax(0, 1fr) repeat(8, 25px) 58px; gap: 0 2px; align-items: center; height: {{r.hc}}; font-size: 11px; text-align: right; background: {{r.bg}}; border-bottom: {{r.rule}}"><b style="text-align: left">{{r.pos}}</b><span style="text-align: left; white-space: nowrap; overflow: hidden; font-weight: {{r.nw}}">{{r.name}}</span><sc-for list="{{r.cells}}" as="x"><span style="display: block; height: {{x.h}}; line-height: {{x.lh}}; box-sizing: border-box; padding-right: 2px; border: {{x.b}}; background: {{x.bg}}; font-weight: {{x.fw}}">{{x.t}}</span></sc-for><span style="display: flex; gap: 1.5px; justify-content: center"><sc-for list="{{r.dots}}" as="d"><span style="width: 10px; height: 10px; background: {{d.bg}}; color: {{d.fg}}; font-size: 7.5px; font-weight: 700; line-height: 10px; text-align: center; border-radius: 1px">{{d.r}}</span></sc-for></span></div></sc-for><div style="display: grid; grid-template-columns: 16px minmax(0, 1fr) repeat(8, 25px) 58px; gap: 0 2px; align-items: center; height: 17px; font-size: 11.5px; font-weight: 700; text-align: right; border-top: 2px solid #161616; border-bottom: 2px solid #161616; background: {{c.tot}}"><span></span><span style="text-align: left; text-transform: uppercase; letter-spacing: 0.06em; font-size: 10.5px">Totals</span><sc-for list="{{totals}}" as="t"><span style="padding-right: 2px">{{t.v}}</span></sc-for><span></span></div><span style="font-size: 10px; color: #444444; line-height: 1.25; margin-top: 1px">Leader = column total minus the other 19 clubs · Last 5: oldest → newest</span></div><div class="puzzle-col" style="display: flex; flex-direction: column; gap: 0; min-width: 0; border-left: 1px solid #161616; padding-left: 12px; margin-left: -6px"><h2 style="margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #161616; margin-bottom: 2px"><span>Puzzle 3 · Club Word Search</span></h2><span style="font-size: 11px; line-height: 1.3">Find the word in bold for all 20 clubs. Words run → ↓ and ↘. Tick each one off.</span><div class="word-grid" style="display: grid; grid-template-columns: {{wsCols}}; grid-auto-rows: 11px; align-self: center; border: 1.5px solid #161616; padding: 1px; flex-shrink: 0"><sc-for list="{{ws}}" as="L"><span style="display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: {{L.fs}}; font-weight: {{L.fw}}; color: {{L.col}}">{{L.ch}}</span></sc-for></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 8px"><sc-for list="{{words}}" as="w"><span style="display: flex; align-items: center; gap: 3px; font-size: 10.5px; height: 12px; white-space: nowrap; overflow: hidden"><span style="width: 7px; height: 7px; border: 1.2px solid #161616; flex-shrink: 0"></span><span><span style="color: #666666">{{w.pre}}</span><b>{{w.w}}</b><span style="color: #666666">{{w.post}}</span></span></span></sc-for></div></div></div></div></div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"mono": {"editor": "boolean", "default": false, "section": "Print"}, "$preview": {"width": 1056, "height": 794}}'>
+function buildWordGrid(words, seed) {
+  function rand() {
+    seed |= 0;
+    seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+  var size = 15, dirs = [[1, 0], [0, 1], [1, 1]], letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var sorted = words.slice().sort(function (a, b) { return b.length - a.length; });
+  for (var attempt = 0; attempt < 80; attempt++) {
+    var grid = [];
+    for (var r = 0; r < size; r++) { grid.push([]); for (var c = 0; c < size; c++) grid[r].push(''); }
+    var ok = true;
+    for (var w = 0; w < sorted.length; w++) {
+      var word = sorted[w], opts = [];
+      for (var d = 0; d < dirs.length; d++) {
+        var dx = dirs[d][0], dy = dirs[d][1];
+        var maxR = size - (dy ? word.length : 1), maxC = size - (dx ? word.length : 1);
+        for (var rr = 0; rr <= maxR; rr++) for (var cc = 0; cc <= maxC; cc++) {
+          var fit = true;
+          for (var k = 0; k < word.length; k++) {
+            var ch = grid[rr + dy * k][cc + dx * k];
+            if (ch && ch !== word[k]) { fit = false; break; }
+          }
+          if (fit) opts.push([rr, cc, dx, dy]);
+        }
+      }
+      if (!opts.length) { ok = false; break; }
+      var pick = opts[Math.floor(rand() * opts.length)];
+      for (var k2 = 0; k2 < word.length; k2++) grid[pick[0] + pick[3] * k2][pick[1] + pick[2] * k2] = word[k2];
+    }
+    if (!ok) continue;
+    for (var r2 = 0; r2 < size; r2++) for (var c2 = 0; c2 < size; c2++) {
+      if (!grid[r2][c2]) grid[r2][c2] = letters[Math.floor(rand() * 26)];
+    }
+    return grid.map(function (row) { return row.join(''); });
+  }
+  return null;
+}
 class Component extends DCLogic {
   renderVals() {
     const m = this.props.mono ?? false;
     const c = m ? { a1: '#161616', top: '#ececec', drop: '#dadada', tile: '#f2f2f2', boxB: '#161616', boxF: '#d9d9d9', tot: '#ececec', home: '#2b2b2b', draw: '#cfcfcf', away: '#7a7a7a', band: '#f2f2f2' }
                 : { a1: '#b3122e', top: '#e8eef8', drop: '#fbe8eb', tile: '#e6f4de', boxB: '#3f7d24', boxF: '#d6efc9', tot: '#f1f1f1', home: '#2a5aa8', draw: '#c9ccd2', away: '#c8553d', band: '#f4f6fa' };
-    /* ===== WEEKLY DATA — copied from the 5 Kaggle CSVs (2026-27 Premier League Season) =====
-       Each week: append the new rows of results.csv to RESULTS. Everything else (table, form, predictions, stats) is recalculated.
-       CLUBS     teams_and_stadiums.csv + managers_and_club_info.csv: [code, team, short name, word-search word, stadium, city, capacity, founded, status, manager, nationality, appointed]
-       RESULTS   results.csv: [matchweek, date, home, away, home goals, away goals]
-       FIXTURES  fixtures.csv, all 380 matches: [matchweek, date, UK kickoff, home, away, TV]   (league_table.csv is used to check the computed table) */
-    const CLUBS = [
-    ["ARS", "Arsenal", "Arsenal", "ARSENAL", "Emirates Stadium", "London", 60704, 1886, "Stayed up", "Mikel Arteta", "Spanish", "December 2019"],
-    ["AVL", "Aston Villa", "Aston Villa", "VILLA", "Villa Park", "Birmingham", 37000, 1874, "Stayed up", "Unai Emery", "Spanish", "October 2022"],
-    ["BOU", "AFC Bournemouth", "Bournemouth", "BOURNEMOUTH", "Vitality Stadium", "Bournemouth", 11364, 1899, "Stayed up", "Marco Rose", "German", "Summer 2025"],
-    ["BRE", "Brentford", "Brentford", "BRENTFORD", "Gtech Community Stadium", "London", 17250, 1889, "Stayed up", "Keith Andrews", "Irish", "June 2025"],
-    ["BHA", "Brighton & Hove Albion", "Brighton", "BRIGHTON", "American Express Stadium", "Brighton", 31800, 1901, "Stayed up", "Fabian Hurzeler", "German", "June 2024"],
-    ["CHE", "Chelsea", "Chelsea", "CHELSEA", "Stamford Bridge", "London", 40343, 1905, "Stayed up", "Xabi Alonso", "Spanish", "July 2026"],
-    ["COV", "Coventry City", "Coventry", "COVENTRY", "Coventry Building Society Arena", "Coventry", 32609, 1883, "Promoted (Championship champions)", "Frank Lampard", "English", "November 2024"],
-    ["CRY", "Crystal Palace", "Crystal Palace", "PALACE", "Selhurst Park", "London", 25486, 1905, "Stayed up", "Pierre Sage", "French", "June 2026"],
-    ["EVE", "Everton", "Everton", "EVERTON", "Hill Dickinson Stadium", "Liverpool", 52769, 1878, "Stayed up", "David Moyes", "Scottish", "January 2025 (2nd spell)"],
-    ["FUL", "Fulham", "Fulham", "FULHAM", "Craven Cottage", "London", 29600, 1879, "Stayed up", "Alvaro Arbeloa", "Spanish", "July 2026"],
-    ["HUL", "Hull City", "Hull City", "HULL", "MKM Stadium", "Hull", 25586, 1904, "Promoted (Play-off winners)", "Sergej Jakirovic", "Croatian", "Summer 2025"],
-    ["IPS", "Ipswich Town", "Ipswich", "IPSWICH", "Portman Road", "Ipswich", 30014, 1878, "Promoted (Automatic - 2nd)", "Gary O'Neil", "English", "June 2026"],
-    ["LEE", "Leeds United", "Leeds", "LEEDS", "Elland Road", "Leeds", 37792, 1919, "Stayed up", "Daniel Farke", "German", "July 2023"],
-    ["LIV", "Liverpool", "Liverpool", "LIVERPOOL", "Anfield", "Liverpool", 61276, 1892, "Stayed up", "Andoni Iraola", "Spanish", "June 2026"],
-    ["MCI", "Manchester City", "Man City", "CITY", "Etihad Stadium", "Manchester", 61000, 1880, "Stayed up", "Enzo Maresca", "Italian", "Summer 2026"],
-    ["MUN", "Manchester United", "Man Utd", "UNITED", "Old Trafford", "Manchester", 75653, 1878, "Stayed up", "Michael Carrick", "English", "13 January 2026 (permanent)"],
-    ["NEW", "Newcastle United", "Newcastle", "NEWCASTLE", "St James' Park", "Newcastle", 52305, 1892, "Stayed up", "Matthias Jaissle", "German", "August 2026"],
-    ["NFO", "Nottingham Forest", "Nott'm Forest", "FOREST", "City Ground", "Nottingham", 30445, 1865, "Stayed up", "Oliver Glasner", "Austrian", "July 2026"],
-    ["SUN", "Sunderland", "Sunderland", "SUNDERLAND", "Stadium of Light", "Sunderland", 48707, 1879, "Stayed up", "Regis Le Bris", "French", "June 2024"],
-    ["TOT", "Tottenham Hotspur", "Tottenham", "TOTTENHAM", "Tottenham Hotspur Stadium", "London", 62062, 1882, "Stayed up", "Roberto De Zerbi", "Italian", "End of 2025/26 season"]
-    ];
-    const RESULTS = [
-    [1, "2026-08-21", "ARS", "COV", 3, 0],
-    [1, "2026-08-22", "HUL", "MUN", 2, 0],
-    [1, "2026-08-22", "EVE", "CRY", 2, 0],
-    [1, "2026-08-22", "IPS", "SUN", 2, 1],
-    [1, "2026-08-22", "NFO", "LEE", 0, 1],
-    [1, "2026-08-22", "BRE", "TOT", 3, 0],
-    [1, "2026-08-23", "MCI", "BOU", 2, 1],
-    [1, "2026-08-23", "BHA", "AVL", 4, 0],
-    [1, "2026-08-23", "NEW", "LIV", 2, 2],
-    [1, "2026-08-24", "FUL", "CHE", 2, 3],
-    [2, "2026-08-28", "CRY", "MCI", 1, 4],
-    [2, "2026-08-29", "LIV", "NFO", 2, 2],
-    [2, "2026-08-29", "BOU", "EVE", 1, 1],
-    [2, "2026-08-29", "COV", "HUL", 0, 1],
-    [2, "2026-08-29", "TOT", "NEW", 0, 2],
-    [2, "2026-08-30", "CHE", "BHA", 4, 3],
-    [2, "2026-08-30", "LEE", "BRE", 1, 1],
-    [2, "2026-08-30", "SUN", "FUL", 1, 0],
-    [2, "2026-08-30", "MUN", "IPS", 5, 2],
-    [2, "2026-08-31", "AVL", "ARS", 0, 1],
-    [3, "2026-09-04", "IPS", "LIV", 0, 2],
-    [3, "2026-09-05", "NEW", "BOU", 2, 2],
-    [3, "2026-09-05", "MCI", "COV", 1, 0],
-    [3, "2026-09-05", "BRE", "SUN", 1, 1],
-    [3, "2026-09-05", "FUL", "CRY", 2, 3],
-    [3, "2026-09-05", "BHA", "LEE", 1, 1],
-    [3, "2026-09-05", "NFO", "TOT", 0, 0],
-    [3, "2026-09-05", "HUL", "AVL", 0, 0],
-    [3, "2026-09-06", "EVE", "MUN", 2, 2],
-    [3, "2026-09-06", "ARS", "CHE", 2, 1],
-    [4, "2026-09-12", "BOU", "BRE", 2, 2],
-    [4, "2026-09-12", "AVL", "NFO", 1, 2],
-    [4, "2026-09-12", "CHE", "HUL", 2, 2],
-    [4, "2026-09-12", "CRY", "IPS", 2, 3],
-    [4, "2026-09-12", "LIV", "FUL", 0, 0],
-    [4, "2026-09-12", "TOT", "EVE", 0, 0],
-    [4, "2026-09-12", "SUN", "ARS", 0, 2],
-    [4, "2026-09-13", "COV", "BHA", 0, 5],
-    [4, "2026-09-13", "MUN", "MCI", 0, 1],
-    [4, "2026-09-14", "LEE", "NEW", 4, 1],
-    [5, "2026-09-18", "BRE", "CHE", 3, 0],
-    [5, "2026-09-19", "TOT", "AVL", 2, 3],
-    [5, "2026-09-19", "BHA", "ARS", 3, 0],
-    [5, "2026-09-19", "EVE", "IPS", 1, 0],
-    [5, "2026-09-19", "LEE", "CRY", 0, 0],
-    [5, "2026-09-19", "MCI", "SUN", 5, 3],
-    [5, "2026-09-19", "NEW", "HUL", 2, 1],
-    [5, "2026-09-19", "NFO", "COV", 0, 1],
-    [5, "2026-09-20", "BOU", "LIV", 0, 1],
-    [5, "2026-09-20", "FUL", "MUN", 1, 1],
-    [6, "2026-10-10", "ARS", "LEE", 2, 1],
-    [6, "2026-10-10", "AVL", "BRE", 2, 2],
-    [6, "2026-10-10", "CHE", "BOU", 5, 1],
-    [6, "2026-10-12", "COV", "NEW", 4, 1],
-    [6, "2026-10-11", "CRY", "NFO", 3, 1],
-    [6, "2026-10-11", "HUL", "EVE", 2, 2],
-    [6, "2026-10-10", "IPS", "FUL", 2, 1],
-    [6, "2026-10-11", "LIV", "MCI", 0, 3],
-    [6, "2026-10-10", "MUN", "TOT", 1, 1],
-    [6, "2026-10-10", "SUN", "BHA", 0, 2]
-    ];
-    const FIXTURES = [
-    [1, "2026-08-21", "20:00", "ARS", "COV", "Sky Sports"],
-    [1, "2026-08-22", "12:30", "HUL", "MUN", "TNT Sports"],
-    [1, "2026-08-22", "15:00", "EVE", "CRY", ""],
-    [1, "2026-08-22", "15:00", "IPS", "SUN", ""],
-    [1, "2026-08-22", "15:00", "NFO", "LEE", ""],
-    [1, "2026-08-22", "17:30", "BRE", "TOT", "Sky Sports"],
-    [1, "2026-08-23", "14:00", "BHA", "AVL", "Sky Sports"],
-    [1, "2026-08-23", "14:00", "MCI", "BOU", "Sky Sports"],
-    [1, "2026-08-23", "16:30", "NEW", "LIV", "Sky Sports"],
-    [1, "2026-08-24", "20:00", "FUL", "CHE", "Sky Sports"],
-    [2, "2026-08-28", "20:00", "CRY", "MCI", "Sky Sports"],
-    [2, "2026-08-29", "12:30", "LIV", "NFO", "TNT Sports"],
-    [2, "2026-08-29", "15:00", "BOU", "EVE", ""],
-    [2, "2026-08-29", "15:00", "COV", "HUL", ""],
-    [2, "2026-08-29", "17:30", "TOT", "NEW", "Sky Sports"],
-    [2, "2026-08-30", "14:00", "CHE", "BHA", "Sky Sports"],
-    [2, "2026-08-30", "14:00", "LEE", "BRE", "Sky Sports"],
-    [2, "2026-08-30", "14:00", "SUN", "FUL", "Sky Sports"],
-    [2, "2026-08-30", "16:30", "MUN", "IPS", "Sky Sports"],
-    [2, "2026-08-31", "20:00", "AVL", "ARS", "Sky Sports"],
-    [3, "2026-09-04", "20:00", "IPS", "LIV", "Sky Sports"],
-    [3, "2026-09-05", "12:30", "NEW", "BOU", "TNT Sports"],
-    [3, "2026-09-05", "15:00", "BRE", "SUN", ""],
-    [3, "2026-09-05", "15:00", "BHA", "LEE", ""],
-    [3, "2026-09-05", "15:00", "FUL", "CRY", ""],
-    [3, "2026-09-05", "15:00", "MCI", "COV", ""],
-    [3, "2026-09-05", "15:00", "NFO", "TOT", ""],
-    [3, "2026-09-05", "17:30", "HUL", "AVL", "Sky Sports"],
-    [3, "2026-09-06", "14:00", "EVE", "MUN", "Sky Sports"],
-    [3, "2026-09-06", "16:30", "ARS", "CHE", "Sky Sports"],
-    [4, "2026-09-12", "15:00", "BOU", "BRE", ""],
-    [4, "2026-09-12", "15:00", "AVL", "NFO", ""],
-    [4, "2026-09-12", "15:00", "CHE", "HUL", ""],
-    [4, "2026-09-12", "15:00", "CRY", "IPS", ""],
-    [4, "2026-09-12", "15:00", "LIV", "FUL", ""],
-    [4, "2026-09-12", "17:30", "TOT", "EVE", "Sky Sports"],
-    [4, "2026-09-12", "20:00", "SUN", "ARS", "TNT Sports"],
-    [4, "2026-09-13", "14:00", "COV", "BHA", "Sky Sports"],
-    [4, "2026-09-13", "16:30", "MUN", "MCI", "Sky Sports"],
-    [4, "2026-09-14", "20:00", "LEE", "NEW", "Sky Sports"],
-    [5, "2026-09-18", "20:00", "BRE", "CHE", "Sky Sports"],
-    [5, "2026-09-19", "12:30", "TOT", "AVL", "TNT Sports"],
-    [5, "2026-09-19", "15:00", "BHA", "ARS", ""],
-    [5, "2026-09-19", "15:00", "EVE", "IPS", ""],
-    [5, "2026-09-19", "15:00", "LEE", "CRY", ""],
-    [5, "2026-09-19", "15:00", "MCI", "SUN", ""],
-    [5, "2026-09-19", "15:00", "NEW", "HUL", ""],
-    [5, "2026-09-19", "17:30", "NFO", "COV", "Sky Sports"],
-    [5, "2026-09-20", "14:00", "BOU", "LIV", "Sky Sports"],
-    [5, "2026-09-20", "16:30", "FUL", "MUN", "Sky Sports"],
-    [6, "2026-10-10", "12:30", "ARS", "LEE", "TNT Sports"],
-    [6, "2026-10-10", "15:00", "AVL", "BRE", ""],
-    [6, "2026-10-10", "15:00", "CHE", "BOU", ""],
-    [6, "2026-10-12", "20:00", "COV", "NEW", "Sky Sports"],
-    [6, "2026-10-11", "14:00", "CRY", "NFO", "Sky Sports"],
-    [6, "2026-10-11", "14:00", "HUL", "EVE", "Sky Sports"],
-    [6, "2026-10-10", "15:00", "IPS", "FUL", ""],
-    [6, "2026-10-11", "16:30", "LIV", "MCI", "Sky Sports"],
-    [6, "2026-10-10", "17:30", "MUN", "TOT", "Sky Sports"],
-    [6, "2026-10-10", "15:00", "SUN", "BHA", ""],
-    [7, "2026-10-18", "14:00", "BOU", "SUN", "Sky Sports"],
-    [7, "2026-10-17", "15:00", "BRE", "LIV", ""],
-    [7, "2026-10-18", "14:00", "BHA", "CRY", "Sky Sports"],
-    [7, "2026-10-17", "12:30", "EVE", "CHE", "TNT Sports"],
-    [7, "2026-10-17", "15:00", "FUL", "HUL", ""],
-    [7, "2026-10-18", "14:00", "LEE", "MUN", "Sky Sports"],
-    [7, "2026-10-17", "15:00", "MCI", "IPS", ""],
-    [7, "2026-10-17", "17:30", "NEW", "AVL", "Sky Sports"],
-    [7, "2026-10-18", "16:30", "NFO", "ARS", "Sky Sports"],
-    [7, "2026-10-19", "20:00", "TOT", "COV", "Sky Sports"],
-    [8, "2026-10-24", "15:00", "ARS", "EVE", ""],
-    [8, "2026-10-24", "12:30", "AVL", "MCI", "TNT Sports"],
-    [8, "2026-10-24", "17:30", "CHE", "TOT", "Sky Sports"],
-    [8, "2026-10-24", "15:00", "COV", "FUL", ""],
-    [8, "2026-10-25", "14:00", "CRY", "NEW", "Sky Sports"],
-    [8, "2026-10-25", "14:00", "HUL", "BRE", "Sky Sports"],
-    [8, "2026-10-23", "20:00", "IPS", "NFO", "Sky Sports"],
-    [8, "2026-10-24", "15:00", "LIV", "BHA", ""],
-    [8, "2026-10-25", "14:00", "MUN", "BOU", "Sky Sports"],
-    [8, "2026-10-25", "16:30", "SUN", "LEE", "Sky Sports"],
-    [9, "2026-10-31", "15:00", "BOU", "LEE", ""],
-    [9, "2026-11-01", "14:00", "AVL", "FUL", "Sky Sports"],
-    [9, "2026-10-31", "15:00", "BRE", "NFO", ""],
-    [9, "2026-10-31", "12:30", "CHE", "MUN", "TNT Sports"],
-    [9, "2026-10-31", "15:00", "COV", "SUN", ""],
-    [9, "2026-10-31", "15:00", "HUL", "IPS", ""],
-    [9, "2026-11-01", "16:30", "LIV", "ARS", "Sky Sports"],
-    [9, "2026-10-31", "15:00", "MCI", "BHA", ""],
-    [9, "2026-11-02", "20:00", "NEW", "EVE", "Sky Sports"],
-    [9, "2026-10-31", "17:30", "TOT", "CRY", "Sky Sports"],
-    [10, "2026-11-07", "TBC", "ARS", "HUL", ""],
-    [10, "2026-11-07", "TBC", "BHA", "BRE", ""],
-    [10, "2026-11-07", "TBC", "CRY", "LIV", ""],
-    [10, "2026-11-07", "TBC", "EVE", "COV", ""],
-    [10, "2026-11-07", "TBC", "FUL", "NEW", ""],
-    [10, "2026-11-07", "TBC", "IPS", "BOU", ""],
-    [10, "2026-11-07", "TBC", "LEE", "TOT", ""],
-    [10, "2026-11-07", "TBC", "MUN", "AVL", ""],
-    [10, "2026-11-07", "TBC", "NFO", "MCI", ""],
-    [10, "2026-11-07", "TBC", "SUN", "CHE", ""],
-    [11, "2026-11-21", "TBC", "BOU", "NFO", ""],
-    [11, "2026-11-21", "TBC", "AVL", "SUN", ""],
-    [11, "2026-11-21", "TBC", "BRE", "EVE", ""],
-    [11, "2026-11-21", "TBC", "CHE", "LEE", ""],
-    [11, "2026-11-21", "TBC", "COV", "CRY", ""],
-    [11, "2026-11-21", "TBC", "HUL", "BHA", ""],
-    [11, "2026-11-21", "TBC", "LIV", "MUN", ""],
-    [11, "2026-11-21", "TBC", "MCI", "FUL", ""],
-    [11, "2026-11-21", "TBC", "NEW", "ARS", ""],
-    [11, "2026-11-21", "TBC", "TOT", "IPS", ""],
-    [12, "2026-11-28", "TBC", "ARS", "MCI", ""],
-    [12, "2026-11-28", "TBC", "BHA", "NEW", ""],
-    [12, "2026-11-28", "TBC", "CRY", "HUL", ""],
-    [12, "2026-11-28", "TBC", "EVE", "LIV", ""],
-    [12, "2026-11-28", "TBC", "FUL", "BOU", ""],
-    [12, "2026-11-28", "TBC", "IPS", "AVL", ""],
-    [12, "2026-11-28", "TBC", "LEE", "COV", ""],
-    [12, "2026-11-28", "TBC", "MUN", "BRE", ""],
-    [12, "2026-11-28", "TBC", "NFO", "CHE", ""],
-    [12, "2026-11-28", "TBC", "SUN", "TOT", ""],
-    [13, "2026-12-02", "20:00", "BOU", "BHA", ""],
-    [13, "2026-12-02", "20:00", "AVL", "EVE", ""],
-    [13, "2026-12-02", "20:00", "BRE", "ARS", ""],
-    [13, "2026-12-02", "20:00", "CHE", "CRY", ""],
-    [13, "2026-12-02", "20:00", "COV", "IPS", ""],
-    [13, "2026-12-02", "20:00", "HUL", "NFO", ""],
-    [13, "2026-12-02", "20:00", "LIV", "SUN", ""],
-    [13, "2026-12-02", "20:00", "MCI", "LEE", ""],
-    [13, "2026-12-02", "20:00", "NEW", "MUN", ""],
-    [13, "2026-12-02", "20:00", "TOT", "FUL", ""],
-    [14, "2026-12-05", "TBC", "BOU", "HUL", ""],
-    [14, "2026-12-05", "TBC", "AVL", "CRY", ""],
-    [14, "2026-12-05", "TBC", "BRE", "MCI", ""],
-    [14, "2026-12-05", "TBC", "CHE", "LIV", ""],
-    [14, "2026-12-05", "TBC", "EVE", "FUL", ""],
-    [14, "2026-12-05", "TBC", "LEE", "IPS", ""],
-    [14, "2026-12-05", "TBC", "MUN", "COV", ""],
-    [14, "2026-12-05", "TBC", "NEW", "SUN", ""],
-    [14, "2026-12-05", "TBC", "NFO", "BHA", ""],
-    [14, "2026-12-05", "TBC", "TOT", "ARS", ""],
-    [15, "2026-12-12", "TBC", "ARS", "BOU", ""],
-    [15, "2026-12-12", "TBC", "BHA", "EVE", ""],
-    [15, "2026-12-12", "TBC", "COV", "AVL", ""],
-    [15, "2026-12-12", "TBC", "CRY", "MUN", ""],
-    [15, "2026-12-12", "TBC", "FUL", "BRE", ""],
-    [15, "2026-12-12", "TBC", "HUL", "TOT", ""],
-    [15, "2026-12-12", "TBC", "IPS", "NEW", ""],
-    [15, "2026-12-12", "TBC", "LIV", "LEE", ""],
-    [15, "2026-12-12", "TBC", "MCI", "CHE", ""],
-    [15, "2026-12-12", "TBC", "SUN", "NFO", ""],
-    [16, "2026-12-19", "TBC", "BOU", "COV", ""],
-    [16, "2026-12-19", "TBC", "ARS", "MUN", ""],
-    [16, "2026-12-19", "TBC", "BRE", "NEW", ""],
-    [16, "2026-12-19", "TBC", "BHA", "IPS", ""],
-    [16, "2026-12-19", "TBC", "CHE", "AVL", ""],
-    [16, "2026-12-19", "TBC", "LEE", "FUL", ""],
-    [16, "2026-12-19", "TBC", "LIV", "TOT", ""],
-    [16, "2026-12-19", "TBC", "MCI", "HUL", ""],
-    [16, "2026-12-19", "TBC", "NFO", "EVE", ""],
-    [16, "2026-12-19", "TBC", "SUN", "CRY", ""],
-    [17, "2026-12-26", "TBC", "AVL", "LEE", ""],
-    [17, "2026-12-26", "TBC", "COV", "CHE", ""],
-    [17, "2026-12-26", "TBC", "CRY", "ARS", ""],
-    [17, "2026-12-26", "TBC", "EVE", "SUN", ""],
-    [17, "2026-12-26", "TBC", "FUL", "BHA", ""],
-    [17, "2026-12-26", "TBC", "HUL", "LIV", ""],
-    [17, "2026-12-26", "TBC", "IPS", "BRE", ""],
-    [17, "2026-12-26", "TBC", "MUN", "NFO", ""],
-    [17, "2026-12-26", "TBC", "NEW", "MCI", ""],
-    [17, "2026-12-26", "TBC", "TOT", "BOU", ""],
-    [18, "2026-12-30", "20:00", "AVL", "LIV", ""],
-    [18, "2026-12-30", "20:00", "COV", "BRE", ""],
-    [18, "2026-12-30", "20:00", "CRY", "BOU", ""],
-    [18, "2026-12-30", "20:00", "EVE", "MCI", ""],
-    [18, "2026-12-30", "20:00", "FUL", "ARS", ""],
-    [18, "2026-12-30", "20:00", "HUL", "LEE", ""],
-    [18, "2026-12-30", "20:00", "IPS", "CHE", ""],
-    [18, "2026-12-30", "20:00", "MUN", "SUN", ""],
-    [18, "2026-12-30", "20:00", "NEW", "NFO", ""],
-    [18, "2026-12-30", "20:00", "TOT", "BHA", ""],
-    [19, "2027-01-02", "TBC", "BOU", "AVL", ""],
-    [19, "2027-01-02", "TBC", "ARS", "IPS", ""],
-    [19, "2027-01-02", "TBC", "BRE", "CRY", ""],
-    [19, "2027-01-02", "TBC", "BHA", "MUN", ""],
-    [19, "2027-01-02", "TBC", "CHE", "NEW", ""],
-    [19, "2027-01-02", "TBC", "LEE", "EVE", ""],
-    [19, "2027-01-02", "TBC", "LIV", "COV", ""],
-    [19, "2027-01-02", "TBC", "MCI", "TOT", ""],
-    [19, "2027-01-02", "TBC", "NFO", "FUL", ""],
-    [19, "2027-01-02", "TBC", "SUN", "HUL", ""],
-    [20, "2027-01-06", "20:00", "ARS", "BRE", ""],
-    [20, "2027-01-06", "20:00", "BHA", "BOU", ""],
-    [20, "2027-01-06", "20:00", "CRY", "CHE", ""],
-    [20, "2027-01-06", "20:00", "EVE", "AVL", ""],
-    [20, "2027-01-06", "20:00", "FUL", "TOT", ""],
-    [20, "2027-01-06", "20:00", "IPS", "COV", ""],
-    [20, "2027-01-06", "20:00", "LEE", "MCI", ""],
-    [20, "2027-01-06", "20:00", "MUN", "NEW", ""],
-    [20, "2027-01-06", "20:00", "NFO", "HUL", ""],
-    [20, "2027-01-06", "20:00", "SUN", "LIV", ""],
-    [21, "2027-01-16", "TBC", "BOU", "IPS", ""],
-    [21, "2027-01-16", "TBC", "AVL", "MUN", ""],
-    [21, "2027-01-16", "TBC", "BRE", "BHA", ""],
-    [21, "2027-01-16", "TBC", "CHE", "SUN", ""],
-    [21, "2027-01-16", "TBC", "COV", "EVE", ""],
-    [21, "2027-01-16", "TBC", "HUL", "ARS", ""],
-    [21, "2027-01-16", "TBC", "LIV", "CRY", ""],
-    [21, "2027-01-16", "TBC", "MCI", "NFO", ""],
-    [21, "2027-01-16", "TBC", "NEW", "FUL", ""],
-    [21, "2027-01-16", "TBC", "TOT", "LEE", ""],
-    [22, "2027-01-23", "TBC", "ARS", "NEW", ""],
-    [22, "2027-01-23", "TBC", "BHA", "MCI", ""],
-    [22, "2027-01-23", "TBC", "CRY", "TOT", ""],
-    [22, "2027-01-23", "TBC", "EVE", "BRE", ""],
-    [22, "2027-01-23", "TBC", "FUL", "AVL", ""],
-    [22, "2027-01-23", "TBC", "IPS", "HUL", ""],
-    [22, "2027-01-23", "TBC", "LEE", "CHE", ""],
-    [22, "2027-01-23", "TBC", "MUN", "LIV", ""],
-    [22, "2027-01-23", "TBC", "NFO", "BOU", ""],
-    [22, "2027-01-23", "TBC", "SUN", "COV", ""],
-    [23, "2027-01-30", "TBC", "BOU", "FUL", ""],
-    [23, "2027-01-30", "TBC", "AVL", "IPS", ""],
-    [23, "2027-01-30", "TBC", "BRE", "MUN", ""],
-    [23, "2027-01-30", "TBC", "CHE", "NFO", ""],
-    [23, "2027-01-30", "TBC", "COV", "LEE", ""],
-    [23, "2027-01-30", "TBC", "HUL", "CRY", ""],
-    [23, "2027-01-30", "TBC", "LIV", "EVE", ""],
-    [23, "2027-01-30", "TBC", "MCI", "ARS", ""],
-    [23, "2027-01-30", "TBC", "NEW", "BHA", ""],
-    [23, "2027-01-30", "TBC", "TOT", "SUN", ""],
-    [24, "2027-02-06", "TBC", "ARS", "LIV", ""],
-    [24, "2027-02-06", "TBC", "BHA", "HUL", ""],
-    [24, "2027-02-06", "TBC", "CRY", "COV", ""],
-    [24, "2027-02-06", "TBC", "EVE", "NEW", ""],
-    [24, "2027-02-06", "TBC", "FUL", "MCI", ""],
-    [24, "2027-02-06", "TBC", "IPS", "TOT", ""],
-    [24, "2027-02-06", "TBC", "LEE", "BOU", ""],
-    [24, "2027-02-06", "TBC", "MUN", "CHE", ""],
-    [24, "2027-02-06", "TBC", "NFO", "BRE", ""],
-    [24, "2027-02-06", "TBC", "SUN", "AVL", ""],
-    [25, "2027-02-10", "20:00", "AVL", "BOU", ""],
-    [25, "2027-02-10", "20:00", "COV", "LIV", ""],
-    [25, "2027-02-10", "20:00", "CRY", "BRE", ""],
-    [25, "2027-02-10", "20:00", "EVE", "LEE", ""],
-    [25, "2027-02-10", "20:00", "FUL", "NFO", ""],
-    [25, "2027-02-10", "20:00", "HUL", "SUN", ""],
-    [25, "2027-02-10", "20:00", "IPS", "ARS", ""],
-    [25, "2027-02-10", "20:00", "MUN", "BHA", ""],
-    [25, "2027-02-10", "20:00", "NEW", "CHE", ""],
-    [25, "2027-02-10", "20:00", "TOT", "MCI", ""],
-    [26, "2027-02-20", "TBC", "BOU", "CRY", ""],
-    [26, "2027-02-20", "TBC", "ARS", "FUL", ""],
-    [26, "2027-02-20", "TBC", "BRE", "COV", ""],
-    [26, "2027-02-20", "TBC", "BHA", "TOT", ""],
-    [26, "2027-02-20", "TBC", "CHE", "IPS", ""],
-    [26, "2027-02-20", "TBC", "LEE", "AVL", ""],
-    [26, "2027-02-20", "TBC", "LIV", "HUL", ""],
-    [26, "2027-02-20", "TBC", "MCI", "NEW", ""],
-    [26, "2027-02-20", "TBC", "NFO", "MUN", ""],
-    [26, "2027-02-20", "TBC", "SUN", "EVE", ""],
-    [27, "2027-02-27", "TBC", "AVL", "CHE", ""],
-    [27, "2027-02-27", "TBC", "COV", "BOU", ""],
-    [27, "2027-02-27", "TBC", "CRY", "SUN", ""],
-    [27, "2027-02-27", "TBC", "EVE", "NFO", ""],
-    [27, "2027-02-27", "TBC", "FUL", "LEE", ""],
-    [27, "2027-02-27", "TBC", "HUL", "MCI", ""],
-    [27, "2027-02-27", "TBC", "IPS", "BHA", ""],
-    [27, "2027-02-27", "TBC", "MUN", "ARS", ""],
-    [27, "2027-02-27", "TBC", "NEW", "BRE", ""],
-    [27, "2027-02-27", "TBC", "TOT", "LIV", ""],
-    [28, "2027-03-03", "20:00", "BOU", "TOT", ""],
-    [28, "2027-03-03", "20:00", "ARS", "CRY", ""],
-    [28, "2027-03-03", "20:00", "BRE", "IPS", ""],
-    [28, "2027-03-03", "20:00", "BHA", "FUL", ""],
-    [28, "2027-03-03", "20:00", "CHE", "COV", ""],
-    [28, "2027-03-03", "20:00", "LEE", "HUL", ""],
-    [28, "2027-03-03", "20:00", "LIV", "AVL", ""],
-    [28, "2027-03-03", "20:00", "MCI", "EVE", ""],
-    [28, "2027-03-03", "20:00", "NFO", "NEW", ""],
-    [28, "2027-03-03", "20:00", "SUN", "MUN", ""],
-    [29, "2027-03-13", "TBC", "BOU", "NEW", ""],
-    [29, "2027-03-13", "TBC", "AVL", "HUL", ""],
-    [29, "2027-03-13", "TBC", "CHE", "ARS", ""],
-    [29, "2027-03-13", "TBC", "COV", "MCI", ""],
-    [29, "2027-03-13", "TBC", "CRY", "FUL", ""],
-    [29, "2027-03-13", "TBC", "LEE", "BHA", ""],
-    [29, "2027-03-13", "TBC", "LIV", "IPS", ""],
-    [29, "2027-03-13", "TBC", "MUN", "EVE", ""],
-    [29, "2027-03-13", "TBC", "SUN", "BRE", ""],
-    [29, "2027-03-13", "TBC", "TOT", "NFO", ""],
-    [30, "2027-03-20", "TBC", "ARS", "SUN", ""],
-    [30, "2027-03-20", "TBC", "BRE", "BOU", ""],
-    [30, "2027-03-20", "TBC", "BHA", "COV", ""],
-    [30, "2027-03-20", "TBC", "EVE", "TOT", ""],
-    [30, "2027-03-20", "TBC", "FUL", "LIV", ""],
-    [30, "2027-03-20", "TBC", "HUL", "CHE", ""],
-    [30, "2027-03-20", "TBC", "IPS", "CRY", ""],
-    [30, "2027-03-20", "TBC", "MCI", "MUN", ""],
-    [30, "2027-03-20", "TBC", "NEW", "LEE", ""],
-    [30, "2027-03-20", "TBC", "NFO", "AVL", ""],
-    [31, "2027-04-10", "TBC", "BOU", "MCI", ""],
-    [31, "2027-04-10", "TBC", "AVL", "BHA", ""],
-    [31, "2027-04-10", "TBC", "CHE", "FUL", ""],
-    [31, "2027-04-10", "TBC", "COV", "ARS", ""],
-    [31, "2027-04-10", "TBC", "CRY", "EVE", ""],
-    [31, "2027-04-10", "TBC", "LEE", "NFO", ""],
-    [31, "2027-04-10", "TBC", "LIV", "NEW", ""],
-    [31, "2027-04-10", "TBC", "MUN", "HUL", ""],
-    [31, "2027-04-10", "TBC", "SUN", "IPS", ""],
-    [31, "2027-04-10", "TBC", "TOT", "BRE", ""],
-    [32, "2027-04-17", "TBC", "ARS", "AVL", ""],
-    [32, "2027-04-17", "TBC", "BRE", "LEE", ""],
-    [32, "2027-04-17", "TBC", "BHA", "CHE", ""],
-    [32, "2027-04-17", "TBC", "EVE", "BOU", ""],
-    [32, "2027-04-17", "TBC", "FUL", "SUN", ""],
-    [32, "2027-04-17", "TBC", "HUL", "COV", ""],
-    [32, "2027-04-17", "TBC", "IPS", "MUN", ""],
-    [32, "2027-04-17", "TBC", "MCI", "CRY", ""],
-    [32, "2027-04-17", "TBC", "NEW", "TOT", ""],
-    [32, "2027-04-17", "TBC", "NFO", "LIV", ""],
-    [33, "2027-04-24", "TBC", "BOU", "ARS", ""],
-    [33, "2027-04-24", "TBC", "AVL", "COV", ""],
-    [33, "2027-04-24", "TBC", "BRE", "FUL", ""],
-    [33, "2027-04-24", "TBC", "CHE", "MCI", ""],
-    [33, "2027-04-24", "TBC", "EVE", "BHA", ""],
-    [33, "2027-04-24", "TBC", "LEE", "LIV", ""],
-    [33, "2027-04-24", "TBC", "MUN", "CRY", ""],
-    [33, "2027-04-24", "TBC", "NEW", "IPS", ""],
-    [33, "2027-04-24", "TBC", "NFO", "SUN", ""],
-    [33, "2027-04-24", "TBC", "TOT", "HUL", ""],
-    [34, "2027-05-01", "TBC", "ARS", "TOT", ""],
-    [34, "2027-05-01", "TBC", "BHA", "NFO", ""],
-    [34, "2027-05-01", "TBC", "COV", "MUN", ""],
-    [34, "2027-05-01", "TBC", "CRY", "AVL", ""],
-    [34, "2027-05-01", "TBC", "FUL", "EVE", ""],
-    [34, "2027-05-01", "TBC", "HUL", "BOU", ""],
-    [34, "2027-05-01", "TBC", "IPS", "LEE", ""],
-    [34, "2027-05-01", "TBC", "LIV", "CHE", ""],
-    [34, "2027-05-01", "TBC", "MCI", "BRE", ""],
-    [34, "2027-05-01", "TBC", "SUN", "NEW", ""],
-    [35, "2027-05-08", "TBC", "BOU", "MUN", ""],
-    [35, "2027-05-08", "TBC", "BRE", "AVL", ""],
-    [35, "2027-05-08", "TBC", "BHA", "SUN", ""],
-    [35, "2027-05-08", "TBC", "EVE", "HUL", ""],
-    [35, "2027-05-08", "TBC", "FUL", "IPS", ""],
-    [35, "2027-05-08", "TBC", "LEE", "ARS", ""],
-    [35, "2027-05-08", "TBC", "MCI", "LIV", ""],
-    [35, "2027-05-08", "TBC", "NEW", "COV", ""],
-    [35, "2027-05-08", "TBC", "NFO", "CRY", ""],
-    [35, "2027-05-08", "TBC", "TOT", "CHE", ""],
-    [36, "2027-05-15", "TBC", "ARS", "NFO", ""],
-    [36, "2027-05-15", "TBC", "AVL", "NEW", ""],
-    [36, "2027-05-15", "TBC", "CHE", "EVE", ""],
-    [36, "2027-05-15", "TBC", "COV", "TOT", ""],
-    [36, "2027-05-15", "TBC", "CRY", "BHA", ""],
-    [36, "2027-05-15", "TBC", "HUL", "FUL", ""],
-    [36, "2027-05-15", "TBC", "IPS", "MCI", ""],
-    [36, "2027-05-15", "TBC", "LIV", "BRE", ""],
-    [36, "2027-05-15", "TBC", "MUN", "LEE", ""],
-    [36, "2027-05-15", "TBC", "SUN", "BOU", ""],
-    [37, "2027-05-23", "TBC", "BOU", "CHE", ""],
-    [37, "2027-05-23", "TBC", "BRE", "HUL", ""],
-    [37, "2027-05-23", "TBC", "BHA", "LIV", ""],
-    [37, "2027-05-23", "TBC", "EVE", "ARS", ""],
-    [37, "2027-05-23", "TBC", "FUL", "COV", ""],
-    [37, "2027-05-23", "TBC", "LEE", "SUN", ""],
-    [37, "2027-05-23", "TBC", "MCI", "AVL", ""],
-    [37, "2027-05-23", "TBC", "NEW", "CRY", ""],
-    [37, "2027-05-23", "TBC", "NFO", "IPS", ""],
-    [37, "2027-05-23", "TBC", "TOT", "MUN", ""],
-    [38, "2027-05-30", "TBC", "ARS", "BHA", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "AVL", "TOT", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "CHE", "BRE", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "COV", "NFO", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "CRY", "LEE", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "HUL", "NEW", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "IPS", "EVE", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "LIV", "BOU", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "MUN", "FUL", "Sky Sports"],
-    [38, "2027-05-30", "TBC", "SUN", "MCI", "Sky Sports"]
-    ];
-    /* G  Word-search grid (15×15). Hides each club word exactly once, running → ↓ ↘. Regenerate only if the clubs change. */
-    const G = [
-      "LIISPECOVENTRYP",
-      "FIPSWICHVTEEBFW",
-      "UNITEDUFIWWSBOL",
-      "LCGWPBVHLCCPSRF",
-      "HLBWEORTLHABTEC",
-      "ASLRAUCDAESOVSM",
-      "MLIVERPOOLTAUTB",
-      "TOTTENHAMSLRPLR",
-      "CNSMWETDEEESLLI",
-      "AIFEAMLFHAVEGEG",
-      "BOTWBOKNOUBNVEH",
-      "FMCYSUNDERLANDT",
-      "OEVERTONBPDLMSO",
-      "VVIYKHUPOFAPIGN",
-      "NCMDPALACEDAMAF"
-    ];
+    /* ===== WEEKLY DATA — public/data/{clubs,results,fixtures,puzzles}.js =====
+       The sheet computes statistics, standings, and puzzles from those files.
+       puzzles.js picks 10 of the 20 stadiums and a word-search seed. */
+    const CLUBS = window.CROSSBAR_CLUBS;
+    const RESULTS = window.CROSSBAR_RESULTS;
+    const FIXTURES = window.CROSSBAR_FIXTURES;
+
+
     /* MATCH  Stadium-match puzzle: 10 club codes (stadium list order) and the shuffled order the clubs are printed in. */
-    const MATCH = ['ARS','CHE','CRY','EVE','FUL','HUL','IPS','MCI','NFO','SUN'];
-    const MATCH_ORDER = [6,2,8,0,4,9,1,7,3,5];
+    const MATCH = window.CROSSBAR_PUZZLES.stadiumCodes;
+    const MATCH_ORDER = window.CROSSBAR_PUZZLES.clubOrder;
     /* ===== DERIVED STATS & PREDICTION MODEL — no weekly edits needed below this line ===== */
     const club = {}; CLUBS.forEach(c => club[c[0]] = { code: c[0], full: c[1], name: c[2], word: c[3], stadium: c[4], city: c[5], cap: c[6], founded: c[7], status: c[8], mgr: c[9], nat: c[10], appt: c[11] });
     const codes = CLUBS.map(c => c[0]);
@@ -820,6 +390,8 @@ class Component extends DCLogic {
     const toughest = runs.slice(0, 3).map(r => ({ name: r.name, opp: r.opp, d: r.diff.toFixed(2) })), easiest = runs.slice(-3).reverse().map(r => ({ name: r.name, opp: r.opp, d: r.diff.toFixed(2) }));
 
     /* --- Puzzle 2: word search (club words) --- */
+    const G = buildWordGrid(CLUBS.map(function (c) { return c[3]; }), window.CROSSBAR_PUZZLES.wordSeed);
+    if (!G) throw new Error('Could not build the word search.');
     const LT = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const ws = [{ ch: '', h: 1 }]; for (let k = 0; k < G[0].length; k++) ws.push({ ch: LT[k], h: 1 });
     G.forEach((row, r) => { ws.push({ ch: String(r + 1), h: 1 }); row.split('').forEach(ch => ws.push({ ch, h: 0 })); });
