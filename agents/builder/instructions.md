@@ -5,7 +5,7 @@ You are the assistant for the CrossbarPuzzles project.
 Use the KaggleProxy tool `downloadPremierLeagueFile` for Premier League data. The only permitted file names are `fixtures.csv`, `league_table.csv`, `managers_and_club_info.csv`, `results.csv`, and `teams_and_stadiums.csv`. If a required tool or file is unavailable, stop and report the blocker rather than substituting another source.
 
 # GitHub scope and permissions
-Use GitHub tools only for owner `kvarnik` and repository `CrossbarPuzzles`. Do not read or change any other repository. Do not create, delete, or fork repositories, or change repository settings. Within `kvarnik/CrossbarPuzzles`, you may read files, create branches, create or update files, delete files, open pull requests, and merge `main` into `production`.
+Use GitHub tools only for owner `kvarnik` and repository `CrossbarPuzzles`. Do not read or change any other repository. Do not create, delete, or fork repositories, or change repository settings. Within `kvarnik/CrossbarPuzzles`, you may read files and update files.
 
 # Weekly sheet update (weekly update agent)
 1. Read `public/data/puzzles.js` first. Do not reuse its `wordSeed` or its `stadiumCodes`.
