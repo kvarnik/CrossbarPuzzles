@@ -11,7 +11,7 @@
 
 ## ⚡ Elevator pitch
 
-**CrossbarPuzzles is a weekly, one-page printable football newspaper that lets kids follow the Premier League without a screen.** An **Azure Function** proxy fetches match data from a CC0 public-domain Kaggle dataset. A **builder agent in Microsoft Foundry** uses that proxy as an OpenAPI tool to write each week's edition and commit it to `main`. A separate **verifier agent** reviews the update and is the only route to `production`, which **GitHub Actions** deploys to **Azure Static Web Apps**. We started with synthetic match data, but young testers weren't interested in it and couldn't give useful feedback, so we rebuilt around real results. That matters especially in the USA, where newspapers rarely print Premier League stats.
+**CrossbarPuzzles is a weekly, one-page printable football newspaper that lets kids follow the Premier League without a screen.** An **Azure Function** proxy fetches match data from a CC0 public-domain Kaggle dataset. A **builder agent in Microsoft Foundry** uses that proxy as an OpenAPI tool to write each week's edition and commit it to `main`. A separate **verifier agent** reviews the update and is the only route to `production`, which **GitHub Actions** deploys to **Azure Static Web Apps**. We started with synthetic match data, but young testers weren't interested in it and couldn't give useful feedback, so we rebuilt around factual data freely available in the public domain. And now kids can focus on English football without screens, advertisements, tracking and distractions. That matters especially in the USA, where newspapers rarely print Premier League stats.
 
 ---
 
@@ -21,7 +21,7 @@
 - **US sports pages skip the Premier League.** In England, every paper prints the table. In the USA, the sports pages are full of the NFL, NBA and MLB. A young American fan who gets up early for a Saturday kick-off has nothing to read about it on paper.
 - **Kids enjoy puzzles about things they care about.** A maths worksheet is a chore. Working out the league leader's points is a challenge.
 
-**CrossbarPuzzles fills that gap.** Parents print one page, and the child gets the table, the results, next week's fixtures and three puzzles, all built from this week's real numbers.
+**CrossbarPuzzles fills that gap.** Parents print one page, and the child gets the table, the results, next week's fixtures and three puzzles, all built from this week's real numbers. Kids can practice skills focus on statistics, content and then a few handy puzzles to challenge their minds.
 
 ---
 
@@ -32,9 +32,9 @@ We started where the hackathon starts: **synthetic, football-realistic data.** T
 - [`synthetic-data/synthetic-match.json`](synthetic-data/synthetic-match.json) is a generated, event-level match with **3,777 events**, including 1,038 passes, 740 carries, 343 pressure events and 43 shots, with fictional players and line-ups.
 - [`public/synthetic-data-mockup.html`](public/synthetic-data-mockup.html) is the printable sheet we built from synthetic data, with top finishers, assist leaders, goalkeepers and puzzles.
 
-**Then we tested it with kids.** They weren't interested in made-up matches with synthetic players, and because they didn't care. they couldn't tell us what worked. A fictional 3-1 win that never happened wasn't interesting. The made-up names overpowered any statistics that were generated. The logic behind using synthetic data was too abstract and that became the focus of conversations.
+**Then we tested it with kids.** They weren't interested in made-up matches with synthetic players. And because they didn't care, they couldn't tell us what worked. A fictional 3-1 win that never happened wasn't interesting. The made-up names overpowered any statistics that were generated. The logic behind using synthetic data was too abstract and the conversations went off the rails quickly.
 
-**Real results changed that.** The page was redesigned to use data that was safely in the public domain with no privacy concerns. With just factual data, engagement changed. The concept worked. The puzzles were interesting and students could gather their own insights into the table. They could track future matches and make their own predections.
+**Real results changed that.** The page was redesigned to use data that was safely in the public domain with no data protection concerns. With just factual data, engagement changed. The concept worked. The puzzles were interesting and students could gather their own insights into the table. They could track future matches and make their own predictions.
 
 > **Key finding:** with kids, engagement drives feedback. Synthetic data produced neither, and real data produced both, so the weekly paper uses real CC0 data. The synthetic prototype stays in the repo as the starting point of the design.
 
