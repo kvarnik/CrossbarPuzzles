@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - production
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: pip install -r kaggle-proxy/requirements.txt pytest
+
+      - name: Proxy tests
+        run: pytest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Fetch the production sheet
+        if: github.event_name == 'pull_request' && github.base_ref == 'production'
+        run: git fetch origin production --depth=1
+
+      - name: Sheet tests
+        env:
+          COMPARE_REF: ${{ github.event_name == 'pull_request' && github.base_ref == 'production' && 'origin/production' || '' }}
+        run: node --test tests/sheet.test.mjs
