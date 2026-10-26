@@ -11,7 +11,7 @@
 
 ## ⚡ Elevator pitch
 
-**CrossbarPuzzles is a weekly, one-page printable football newspaper that lets kids follow the Premier League without a screen.** An **Azure Function** proxy fetches match data from a CC0 public-domain Kaggle dataset. A **builder agent in Microsoft Foundry** uses that proxy as an OpenAPI tool to write each week's edition and commit it to `main`. A separate **verifier agent** reviews the update and is the only route to `production`, which **GitHub Actions** deploys to **Azure Static Web Apps**. We started with synthetic match data, but young testers weren't interested in it and couldn't give useful feedback, so we rebuilt around factual data freely available in the public domain. And now kids can focus on English football without screens, advertisements, tracking and distractions. That matters especially in the USA, where newspapers rarely print Premier League stats.
+**CrossbarPuzzles is a weekly, one-page printable football newspaper that lets kids follow the Premier League without a screen.** A key focus was to keep the agentic design, compute needs and hosting requirements to be minimal, so the project could live-on beyond the hackathon. An **Azure Function** proxy fetches match data from a CC0 public-domain Kaggle dataset. A **builder agent in Microsoft Foundry** uses that proxy as an OpenAPI tool to write each week's edition and commit it to `main`. A separate **verifier agent** reviews the update and is the only route to `production`, which **GitHub Actions** deploys to **Azure Static Web Apps**. We started with synthetic match data, but young testers weren't interested in it and couldn't give useful feedback, so we rebuilt around factual data freely available in the public domain. And now kids can focus on English football without screens, advertisements, tracking and distractions. That matters especially in the USA, where newspapers rarely print Premier League stats. 
 
 ---
 
@@ -21,9 +21,19 @@
 - **US sports pages skip the Premier League.** In England, every paper prints the table. In the USA, the sports pages are full of the NFL, NBA and MLB. A young American fan who gets up early for a Saturday kick-off has nothing to read about it on paper.
 - **Kids enjoy puzzles about things they care about.** A maths worksheet is a chore. Working out the league leader's points is a challenge.
 
-**CrossbarPuzzles fills that gap.** Parents print one page, and the child gets the table, the results, next week's fixtures and three puzzles, all built from this week's real numbers. Kids can practice skills focus on statistics, content and then a few handy puzzles to challenge their minds.
+**CrossbarPuzzles fills that gap.** Parents print one page, and the child gets the table, the results, next week's fixtures and three puzzles, all built from this week's real numbers. Kids develop skills focusing on statistics, content and then a few handy puzzles to challenge their minds.
 
 ---
+
+## 💸 Built to last: near-zero running costs
+
+CrossbarPuzzles is designed to cost almost nothing to run, so it can keep publishing every matchweek long after the hackathon:
+
+- **The agents run once a week.** The builder and verifier each run once per matchweek, about 38 times a season, not on every page view.
+- **No server work per reader.** The site is static, served by Azure Static Web Apps, and each reader's browser computes the stats and puzzles from four small data files. A thousand readers cost about the same as one.
+- **Serverless data access.** The Azure Function proxy runs only when the builder asks for data and costs nothing when it's idle.
+- **No database, and free data.** The weekly edition lives in four small data files in the repo, and the source data is CC0 public domain.
+- **Printing moves the "screen time" offline.** Once the page is printed, it costs nothing to read again and again.
 
 ## What we learned: synthetic data didn't engage kids
 
@@ -42,9 +52,9 @@ We started where the hackathon starts: **synthetic, football-realistic data.** T
 
 ## 🗞️ What's on the page
 
-Everything fits on **one A4 (or 8.5 x11) landscape page** and prints in black and white. (Or color)
+Everything fits on **one A4 (or "US Letter 8.5 x11 in") landscape page** and prints in black and white. 
 
-| Section | What it shows | What kids practise |
+| Section | What it shows | What kids work on |
 |---|---|---|
 | **Power ratings** | Attack and defence for all 20 clubs against an average side (1.00 = average). Rating = Att ÷ Def | Ratios and comparing numbers |
 | **Next 3 games** | The hardest and kindest upcoming runs, using the average rating of the three opponents | Averages |
@@ -85,6 +95,8 @@ flowchart LR
 ---
 
 ## 🤖 The agents
+
+The low-cost agentic design was made to minimize cost, reduce complexity and increase maintainability. 
 
 There are two agents with **separate duties**: one builds and one checks. The builder can't publish, and the verifier can't edit files.
 
