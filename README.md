@@ -137,7 +137,7 @@ There are two agents with **separate duties**: one builds and one checks. The bu
 1. **Open the live page:** [crossbarpuzzles.com](https://www.crossbarpuzzles.com), then press **Print** to see that it fits on one page.
 2. **Look at the data the builder writes:** [`public/data/`](public/data/), four files in a simple format, with no logic in them.
 3. **Read the agents' instructions:** [builder](agents/builder/instructions.md) and [verifier](agents/verifier/instructions.md).
-4. **See the promotion gate:** [pull requests into `production`](https://github.com/kvarnik/CrossbarPuzzles/pulls?q=is%3Apr+base%3Aproduction). <!-- TODO: link the PR where the verifier posted its report -->
+4. **See the promotion gate:** [pull requests into `production`](https://github.com/kvarnik/CrossbarPuzzles/pulls?q=is%3Apr+base%3Aproduction). 
 5. **See the synthetic starting point:** [`synthetic-data/`](synthetic-data/) and [the synthetic mockup](public/synthetic-data-mockup.html).
 
 ---
