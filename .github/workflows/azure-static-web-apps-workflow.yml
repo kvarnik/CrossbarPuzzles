@@ -50,10 +50,17 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - name: Close Pull Request
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
+        # Merging can close a pull request that never created a preview.
+        # Azure then reports "No matching static site found" and fails the job.
+        continue-on-error: true
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_WATER_0B50B960F }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "close"
