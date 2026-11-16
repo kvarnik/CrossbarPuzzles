@@ -1,17 +1,26 @@
 name: Azure Static Web Apps CI/CD
 
+# Disabled so this workflow never runs. GitHub only starts a workflow when an
+# `on` event matches; `workflow_dispatch` is listed so the file stays valid,
+# and every job is guarded with `if: false` so a manual run does nothing.
+# To re-enable, restore the push/pull_request triggers and the original job `if`s.
 on:
-  push:
-    branches:
-      - production
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - production
+  workflow_dispatch:
+
+# Previous triggers (do not restore without also removing `if: false` below):
+# on:
+#   push:
+#     branches:
+#       - production
+#   pull_request:
+#     types: [opened, synchronize, reopened, closed]
+#     branches:
+#       - production
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: false
+    # github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     permissions:
@@ -47,7 +56,8 @@ jobs:
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    if: false
+    # github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     permissions:
